@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY: "euc70ryld535pw+w&+r9s(y=dd89&9(^^o!hz(92trx@#a*a12"
+      DEBUG: "True"
+      DB_NAME: "e-commerce-db"
+      DB_USER: "admin"
+      DB_PASSWORD: "1234"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+
+
+
+
+  db:
+    image: postgres:15
+    restart: always  
+    environment:
+      POSTGRES_DB: "e-commerce-db"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "1234"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
