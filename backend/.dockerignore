@@ -1,0 +1,25 @@
+# Python cache dosyaları
+__pycache__
+*.py[cod]
+*$py.class
+
+# Sanal ortam klasörleri
+venv/
+env/
+.venv/
+
+# Veritabanı dosyaları (örneğin SQLite)
+*.sqlite3
+
+# Log dosyaları
+*.log
+
+# Git dosyaları
+.git
+.gitignore
+
+# Docker ile ilgili dosyalar (opsiyonel: build sürecinde gerekmezse)
+Dockerfile
+.dockerignore
+
+

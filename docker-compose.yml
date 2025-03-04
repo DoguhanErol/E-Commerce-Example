@@ -30,6 +30,8 @@ services:
       - backend
     volumes:
       - ./frontend:/app
+    environment:
+    - CHOKIDAR_USEPOLLING=true
 
 
 
@@ -43,9 +45,12 @@ services:
       POSTGRES_PASSWORD: "1234"
     volumes:
       - pgdata:/var/lib/postgresql/data
-
+      - /app/node_modules  # node_modules mount edilmesini engelle
     ports:
       - "5432:5432"
+    
 
 volumes:
   pgdata:
+
+
