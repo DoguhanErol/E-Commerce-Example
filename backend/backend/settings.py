@@ -66,24 +66,34 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-}
+    
+} 
 
 #JWT
 from datetime import timedelta
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # Access token süresi
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Refresh token süresi
-    "ROTATE_REFRESH_TOKENS": True,  # Refresh token yenilendiğinde eskisini geçersiz kılar
-    "BLACKLIST_AFTER_ROTATION": True,  # Eski token geçersiz hale gelir
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "TOKEN_BLACKLIST_ENABLED": True,  # Token blacklist kullanımı
+    "TOKEN_BLACKLIST_ENABLED": True,
+
+    # # Yeni eklenen cookie ayarları
+    # "AUTH_COOKIE": "access_token",  # Çerez ismi
+    # "AUTH_COOKIE_DOMAIN": None,  # Belirli bir domain belirtmek istersen
+    # "AUTH_COOKIE_SECURE": False,  # HTTPS kullanıyorsan True yap
+    # "AUTH_COOKIE_HTTP_ONLY": True,  # JS tarafından erişilemez
+    # "AUTH_COOKIE_PATH": "/",  # Çerezin geçerli olduğu path
+    # "AUTH_COOKIE_SAMESITE": "Lax",  # Güvenli siteler için `Strict` kullan
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware', #CORS
+    'django.middleware.common.CommonMiddleware',#CORS
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -146,14 +156,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "users.CustomUser"
+# AUTH_USER_MODEL = 'users.CustomUser'
+
 
  
 #CORS Settings
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',  # React frontend'inizin çalıştığı port
+        'http://localhost:5173',  # React frontend'inizin çalıştığı port
+        'http://127.0.0.1:5173',  # Localhost üzerinden erişim
 ]
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'Authorization',  # Bu başlığın izinli olduğundan emin olun
+]
+# CORS_REPLACE_HTTPS_REFERER = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:5173',
+)
 
 
 # Internationalization

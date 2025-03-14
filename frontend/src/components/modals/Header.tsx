@@ -14,8 +14,7 @@ const Header: React.FC = () => {
   const { cartData, cartIsLoading, cartError } = useCart();
 
   
-
-  
+  console.log('header:', isLoggedIn())
 
   const handleLogout = () => {
     logout(); // Logout the user

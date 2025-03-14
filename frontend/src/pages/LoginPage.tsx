@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth'; // Güncellenmiş context
-import { loginAPI } from '../services/AuthService'; // Güncellenmiş API
 import bg_image from "../assets/bg_image.webp";
-import 'animate.css'
+import 'animate.css';
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { loginUser } = useAuth();
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const { login, error } = useAuth(); // useAuth'tan login fonksiyonunu alıyoruz
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      
-      await loginAPI(username, password);
-      loginUser(username,password); // Token'ı context'e kaydet
-      navigate('/'); // Giriş yaptıktan sonra yönlendirin
-    } catch (error) {
-      console.error('Giriş başarısız:', error);
+      const response =await login(username, password); // Yeni auth sistemiyle giriş yapıyoruz
+      console.log(response)
+      if (response) {
+        navigate('/'); // Giriş yaptıktan sonra ana sayfaya yönlendir
+      }else{
+        console.log(error) //Kullanici adi veya sifre hatali componenti gonder
+      }
+    } catch (err) {
+      console.error('Giriş başarısız:', err);
     }
   };
 

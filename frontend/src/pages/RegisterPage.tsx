@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/useAuth'; // Güncellenmiş context
-import { registerAPI } from '../services/AuthService'; // Güncellenmiş API
+import { useAuth } from '../context/useAuth'; // useAuth hook'unuz register fonksiyonunu içeriyor
 import bg_image from "../assets/bg_image.webp";
 import 'animate.css';
 
@@ -10,11 +9,9 @@ const RegisterPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
-  const { registerUser, logout } = useAuth(); // Güncellenmiş context
+  const { register, error } = useAuth(); // register fonksiyonunu destructure ediyoruz
   const navigate = useNavigate();
 
-
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -24,11 +21,10 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      await registerAPI(username, password,email);
-      registerUser(username, password, email);
-      navigate('/login'); // Kayıttan sonra giriş sayfasına yönlendirin
-    } catch (error) {
-      console.error('Registration failed:', error);
+      await register(username, email, password);  // useAuth içindeki register fonksiyonunu çağırıyoruz
+      navigate('/login'); // Kayıt başarılı olursa login sayfasına yönlendiriyoruz
+    } catch (err) {
+      console.error('Registration failed:', err);
     }
   };
 

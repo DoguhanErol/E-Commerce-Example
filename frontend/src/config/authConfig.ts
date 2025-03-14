@@ -1,5 +1,12 @@
+export const API_URL_AUTH = 'http://127.0.0.1:8000/api/v1/users/';
  export const API_URL_LOGIN = 'http://127.0.0.1:8000/api/v1/users/login/';
  export const API_URL_REGISTER= 'http://127.0.0.1:8000/api/v1/users/register/';
+ export const API_URL_LOGOUT = 'http://127.0.0.1:8000/api/v1/users/logout/';
+ export const API_URL_USER = 'http://127.0.0.1:8000/api/v1/users/user/';
+ export const API_URL_REFRESH = 'http://127.0.0.1:8000/api/v1/users/refresh/';
+
+
+
  export const API_URL_PRODUCTS='http://127.0.0.1:8000/api/v1/products';
  export const API_URL_CATEGORIES='http://127.0.0.1:8000/api/v1/products/categories/';
  export const API_URL_CART='http://127.0.0.1:8000/api/v1/cart/';
@@ -7,6 +14,7 @@
  export const API_URL_ORDER_LIST='http://127.0.0.1:8000/api/v1/order/list/';
  export const API_URL_ORDER_DETAIL='http://127.0.0.1:8000/api/v1/order/';
  export const API_URL_ORDER_CREATE='http://127.0.0.1:8000/api/v1/order/create/';
+ 
 
 
  

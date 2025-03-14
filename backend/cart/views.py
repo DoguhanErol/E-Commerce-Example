@@ -8,23 +8,6 @@ from .serializers import CartSerializer, CartItemSerializer
 from products.models import Product
 from django.shortcuts import get_object_or_404
 
-# class CartView(APIView):
-#     permission_classes = [IsAuthenticated]
-
-#     def get(self, request, *args, **kwargs):
-#         if not request.user.is_authenticated:
-#             return Response({"error": "Yetkisiz erişim."}, status=status.HTTP_401_UNAUTHORIZED)
-
-#         try:
-#             cart = Cart.objects.get(user=request.user)
-#             cart_items = CartItem.objects.filter(cart=cart)
-#             serializer = CartItemSerializer(cart_items, many=True)
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         except Cart.DoesNotExist:
-#             return Response({"message": "Sepet bulunamadı."}, status=status.HTTP_404_NOT_FOUND)
-#         except Exception as e:
-#             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
 class CartView(APIView):
     permission_classes = [IsAuthenticated]
 

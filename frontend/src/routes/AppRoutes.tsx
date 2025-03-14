@@ -7,7 +7,6 @@ import HomePage from '../pages/HomePage';
 import ProtectedRoute from '../routes/PrivateRoute'; // Güncellenmiş ProtectedRoute
 import NotFoundPage from '../pages/NotFoundPage';
 import Layout from '../components/modals/Layout';
-import { UserProvider } from '../context/useAuth';
 import ProductsPage from '../pages/ProductsPage';
 import RegisterPage from '../pages/RegisterPage';
 import ProductDetailPage from '../pages/ProductDetailPage';
@@ -18,7 +17,6 @@ const AppRoutes = () => {
 
   
   return (
-    <UserProvider>
       <CartProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -62,7 +60,6 @@ const AppRoutes = () => {
         </Route>
       </Routes>
       </CartProvider>
-    </UserProvider>
   );
 };
 

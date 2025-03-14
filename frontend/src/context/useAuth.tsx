@@ -1,96 +1,93 @@
-import { createContext, useEffect, useState } from "react";
-import { UserProfile } from "../models/User";
-import { loginAPI, registerAPI } from "../services/AuthService";
-import React from "react";
-import axios from "axios";
-//auth givenli degil guvenli hale getir
-type UserContextType = {
-  user: UserProfile | null;
-  token: string | null;
-  registerUser: (email: string, username: string, password: string) => void;
-  loginUser: (username: string, password: string) => void;
-  logout: () => void;
+import { useState, useEffect, useCallback } from "react";
+import { authService } from "../services/AuthService";
+import { User } from "../models/User"; // User tipi
+
+export interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  error: string | null;
+  register: (username: string, email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<boolean>;
+  logout: () => Promise<void>;
+  refreshToken: () => Promise<void>;
   isLoggedIn: () => boolean;
-};
+}
 
-type Props = { children: React.ReactNode };
+export const useAuth = () => {
+  const [user, setUser] = useState<User | null>(
+    localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null
+  );
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-const UserContext = createContext<UserContextType>({} as UserContextType);
+  const isLoggedIn = () => !!user;
 
-export const UserProvider = ({ children }: Props) => {
-  const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [isReady, setIsReady] = useState(false);
+  const loadUser = async () => {
+    try {
+      const response = await authService.getUser();
+      setUser(response.data);
+      localStorage.setItem("user", JSON.stringify(response.data));
+    } catch (error: any) {
+      setError("Failed to load user");
+    }
+  };
+
+  const login = async (username: string, password: string) => {
+    setLoading(true);
+    try {
+      const response = await authService.login(username, password);
+      if (response.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response));
+        setUser(response);
+      }
+      setLoading(false);
+      return true;
+    } catch (error: any) {
+      setError(error.response?.data?.detail || "Login failed, please try again");
+      setLoading(false);
+      return false;
+    }
+  };
+
+  const register = async (username: string, email: string, password: string) => {
+    setLoading(true);
+    try {
+      const response = await authService.register({ username, email, password });
+      setUser(response.data);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setLoading(false);
+    } catch (error: any) {
+      setError(error.response?.data?.detail || "Registration failed, please try again");
+      setLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await authService.logout();
+      setUser(null);
+      localStorage.removeItem("user");
+    } catch (error: any) {
+      setError(error.response?.data?.detail || "Logout failed, please try again");
+    }
+  };
+
+  const refreshToken = useCallback(async () => {
+    try {
+      const response = await authService.refreshToken();
+      localStorage.setItem("user", JSON.stringify(response));
+      setUser(response);
+    } catch (error: any) {
+      setError("Failed to refresh token");
+      logout();
+    }
+  }, [logout]);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    if (user && token) {
-      setUser(JSON.parse(user));
-      setToken(token);
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    if (!user) {
+      loadUser();
     }
-    setIsReady(true);
   }, []);
 
-  const registerUser = async (
-    username: string,
-    password: string,
-    email: string
-  ) => {
-    try {
-      const res = await registerAPI(username, password, email);
-      if (res) {
-        localStorage.setItem("token", res?.data.access);
-        const userObj = {
-          userName: res?.data.username,
-        };
-        localStorage.setItem("user", JSON.stringify(userObj));
-        setToken(res?.data.access!);
-        setUser(userObj!);
-        console.log('Register Success');
-      }
-    } catch (e) {
-      console.log(e, 'error');
-    }
-  };
-  
-  const loginUser = async (username: string, password: string) => {
-    
-    await loginAPI(username, password)
-      .then((res) => {
-        if (res) {
-          localStorage.setItem("token", res?.data.access);
-          const userObj = {
-            userName: res?.data.username,
-          };
-          localStorage.setItem("user", JSON.stringify(userObj));
-          setToken(res?.data.access!);
-          setUser(userObj!);
-          console.log('login success')
-        }
-      })
-      .catch((e) => console.log(e,'error'));
-  };
-
-  const isLoggedIn = () => {
-    return !!token;
-  };
-
-  const logout = () => {
-    localStorage.removeItem("access");
-    localStorage.removeItem("user");
-    setUser(null);
-    setToken("");
-  };
-
-  return (
-    <UserContext.Provider
-      value={{ loginUser, user, token, logout, isLoggedIn, registerUser }}
-    >
-      {isReady ? children : null}
-    </UserContext.Provider>
-  );
+  return { user, login, register, logout, error, refreshToken, isLoggedIn };
 };
-
-export const useAuth = () => React.useContext(UserContext);

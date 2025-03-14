@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
-User = get_user_model()
-
+# Kullanıcı bilgileri için Serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "email")
 
+# Kullanıcı Kaydı Serializer
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -19,32 +19,44 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+# Kullanıcı Giriş Serializer (Token Döndürüyor)
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField(write_only=True)
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(write_only=True, required=True)
 
     def validate(self, data):
-        user = User.objects.filter(username=data["username"]).first()
-        if user and user.check_password(data["password"]):
-            return user
-        raise serializers.ValidationError("Invalid credentials")
+        username = data.get("username")
+        password = data.get("password")
 
+        user = User.objects.filter(username=username).first()
+        if not user:
+            raise serializers.ValidationError("Geçersiz kullanıcı adı veya şifre.")
+
+        if not user.check_password(password):
+            raise serializers.ValidationError("Geçersiz kullanıcı adı veya şifre.")
+
+        refresh = RefreshToken.for_user(user)
+        return {
+            "user": UserSerializer(user).data,
+            "accessToken": str(refresh.access_token),
+            "refreshToken": str(refresh),
+        }
+
+# Kullanıcı Çıkış Serializer
 class LogoutSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
+    refreshToken = serializers.CharField()
 
     def validate(self, attrs):
-        self.token = attrs["refresh"]
+        self.token = attrs["refreshToken"]
         try:
             RefreshToken(self.token)
-        except Exception as e:
+        except Exception:
             raise serializers.ValidationError("Invalid refresh token")
-
         return attrs
 
     def save(self, **kwargs):
         try:
             refresh = RefreshToken(self.token)
-            refresh.blacklist()  # Refresh token'i blacklist'e ekliyoruz
-        except Exception as e:
+            refresh.blacklist()  # Refresh token'ı kara listeye ekle
+        except Exception:
             raise serializers.ValidationError("Invalid refresh token")
-
