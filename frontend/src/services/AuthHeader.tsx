@@ -1,8 +1,7 @@
 export default function AuthHeader() {
-  const user = JSON.parse(localStorage.getItem("user") || "null");
-
-  if (user?.accessToken) {
-    return { Authorization: `Bearer ${user.accessToken}` }; // Django Rest Framework backend için
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    return { Authorization: `Bearer ${accessToken}` };
   }
   return {};
 }

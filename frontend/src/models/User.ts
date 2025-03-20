@@ -14,11 +14,11 @@
 //   };
   
 
-// export type UserInfo = {
-//   id: number;
-//   username: string;
-//   email: string;
-// }
+ export type UserInfo = {
+   id: number;
+   username: string;
+   email: string;
+ }
 
 
 // yeni yapi

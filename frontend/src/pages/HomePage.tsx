@@ -1,7 +1,7 @@
 //Permission: EVERYBODY
 
 import React from 'react'
-import { useAuth } from '../context/useAuth';
+import { useAuthContext } from '../hooks/useAuth';
 import bg_image from '../assets/bg_2.webp';
 import HomeHero from '../components/modals/HomeHero';
 import HomeProducts from '../components/modals/HomeProducts';
@@ -11,8 +11,9 @@ import HomeCart from '../components/modals/HomeCart';
 import HomeOrders from '../components/modals/HomeOrders';
 
 
-const HomePage:React.FC = () => {
-  const { isLoggedIn, logout } = useAuth();
+const HomePage:React.FC =  () => {
+  const { isLoggedIn } = useAuthContext();
+
 
   // soyle yapacagiz eger giris yapilmamissa productscard, categoriescard,logincard gozukucek
   //eger giris yapildiysa ek olarak cartCard, ordersCard, profileCard gozukecek
@@ -25,7 +26,7 @@ const HomePage:React.FC = () => {
 
       <HomeCategories />
 
-      {isLoggedIn() ? (
+      {isLoggedIn ? (
         <>
         <Divider headerText='Your Cart' />
         <HomeCart />

@@ -12,12 +12,15 @@ import RegisterPage from '../pages/RegisterPage';
 import ProductDetailPage from '../pages/ProductDetailPage';
 import ProductsByCategory from '../pages/ProductsByCategory';
 import { CartProvider } from '../context/CartContext';
+import { AuthProvider } from "../hooks/useAuth";
 
 const AppRoutes = () => {
 
   
   return (
+    <AuthProvider>
       <CartProvider>
+
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} /> {/* Ana sayfa */}
@@ -60,6 +63,8 @@ const AppRoutes = () => {
         </Route>
       </Routes>
       </CartProvider>
+      </AuthProvider>
+
   );
 };
 

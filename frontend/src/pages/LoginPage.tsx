@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/useAuth'; // Güncellenmiş context
+
 import bg_image from "../assets/bg_image.webp";
 import 'animate.css';
-
+import { useAuthContext } from '../hooks/useAuth';
 const LoginPage: React.FC = () => {
+  const { login , error } = useAuthContext(); 
+
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { login, error } = useAuth(); // useAuth'tan login fonksiyonunu alıyoruz
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+     try {
+       const response =await login(username, password); // Yeni auth sistemiyle giriş yapıyoruz
+       if (response) {
+         navigate('/'); // Giriş yaptıktan sonra ana sayfaya yönlendir
+       }else{
+        console.log('Giris yapilamadi!') //Kullanici adi veya sifre hatali componenti gonder
 
-    try {
-      const response =await login(username, password); // Yeni auth sistemiyle giriş yapıyoruz
-      console.log(response)
-      if (response) {
-        navigate('/'); // Giriş yaptıktan sonra ana sayfaya yönlendir
-      }else{
-        console.log(error) //Kullanici adi veya sifre hatali componenti gonder
-      }
-    } catch (err) {
-      console.error('Giriş başarısız:', err);
-    }
-  };
+         console.log(error) //Kullanici adi veya sifre hatali componenti gonder
+       }
+     } catch (err) {
+       console.error('Giriş başarısız:', err);
+     }
+
+   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen  bg-cover " style={{ backgroundImage: `url(${bg_image})` }}>

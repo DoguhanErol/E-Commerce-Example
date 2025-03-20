@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/useAuth'; // useAuth hook'unuz register fonksiyonunu içeriyor
+import { useAuthContext } from '../hooks/useAuth'; // useAuth hook'unuz register fonksiyonunu içeriyor
 import bg_image from "../assets/bg_image.webp";
 import 'animate.css';
 
@@ -9,7 +9,7 @@ const RegisterPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
-  const { register, error } = useAuth(); // register fonksiyonunu destructure ediyoruz
+  const { register, error } = useAuthContext(); // register fonksiyonunu destructure ediyoruz
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {

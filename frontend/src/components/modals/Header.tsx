@@ -1,24 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../context/useAuth";
+import { useAuthContext } from "../../hooks/useAuth";
 import { Link } from 'react-router-dom';
 import useFetchCategories from '../../hooks/useFetchCategories'; // Import your custom hook
 import useFetchCartList from '../../hooks/useFetchCartList';
 import logo from '../../assets/logo.png'
 import { useCart } from '../../context/CartContext';
+import Loading from './Loading';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useAuth();
   const { categories, loading, error } = useFetchCategories(); // Use the custom hook
   const { cartData, cartIsLoading, cartError } = useCart();
-
-  
-  console.log('header:', isLoggedIn())
+  const {isLoggedIn, logout, loadingAuth} = useAuthContext();
 
   const handleLogout = () => {
     logout(); // Logout the user
-    navigate('/login'); // Redirect to login page
+    if (loadingAuth) {
+      <Loading />
+    }else{
+      navigate('/login'); // Redirect to login page
+    }
   };
 
   return (
@@ -58,7 +60,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* User Avatar ,Profile and Cart */}
-          {isLoggedIn() ? (
+          {isLoggedIn ? (
             <>
               <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
