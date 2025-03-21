@@ -6,6 +6,7 @@ import useCreateOrder from '../../hooks/useCreateOrder';
 import { useNavigate } from 'react-router-dom'; // Yönlendirme için import edin
 import FailedAlert from '../ui/FailedAlert';
 import { useCart } from '../../context/CartContext';
+import Loading from './Loading';
 
 type Tprops = {
   cartData: Cart;
@@ -19,6 +20,7 @@ const CartItemCard = (props: Tprops) => {
   const handleOrderProducts = async () => {
 
     await handleCreateOrder(); // Siparişi oluştur
+    console.log('Cart Item Card:',createOrderResponse)
     if (error) {
       <FailedAlert message={'Unexpected error!!! Error message:'+ createOrderResponse} />
 
@@ -28,6 +30,9 @@ const CartItemCard = (props: Tprops) => {
       navigate('/orders'); // Kullanıcıyı /orderstatus sayfasına yönlendir
     }
   };
+  if (isLoading) {
+    return <Loading />
+  }
 
   // If Cart is Empty
   if (props.cartData.cartItems.length <= 0) {

@@ -8,8 +8,6 @@
  } from "../config/authConfig";
  import AuthHeader from "./AuthHeader";
 import { User } from "../models/User";
-import { useState } from "react";
-import { useAuthStatus } from "../context/AuthContext";
 
 
  export const authService = {
@@ -17,7 +15,7 @@ import { useAuthStatus } from "../context/AuthContext";
    register: async (userData: { username: string; password: string; email: string }) => {
     try {
       const response = await axios.post(API_URL_REGISTER, userData);
-      if (response.data) {
+      if (response.status === 200 || response.status === 204|| response.status === 201) {
         return true;
       }else{
         return false;
@@ -36,7 +34,7 @@ import { useAuthStatus } from "../context/AuthContext";
      localStorage.setItem("user", JSON.stringify(response.data.user));
      localStorage.setItem("accessToken", response.data.accessToken);
      localStorage.setItem("refreshToken", response.data.refreshToken);
-     console.log('LoginService successed.')
+     console.log('Login Service successed.')
      return true;
      }else {
       console.error("Login error statuss:", response.status);
@@ -47,7 +45,6 @@ import { useAuthStatus } from "../context/AuthContext";
    // Kullanıcı çıkışı
    logout: async () => {
     const refreshToken = localStorage.getItem('refreshToken')
-    console.log(refreshToken)
      try {
      const response= await axios.post(
         API_URL_LOGOUT,
@@ -94,43 +91,4 @@ import { useAuthStatus } from "../context/AuthContext";
        return false;
      }
    },
-
-
-
-
-
-//localstorage thinks
-
-// //   // LocalStorage işlemleri
-// //   setUserToStorage: (user: any) => {
-// //     localStorage.setItem("user", JSON.stringify(user));
-// //   },
-
-// //   getUserFromStorage: () => {
-// //     const user = localStorage.getItem("user");
-// //     return user ? JSON.parse(user) : null;
-// //   },
-
-// //   setTokens: (accessToken: string, refreshToken: string) => {
-// //     localStorage.setItem("accessToken", accessToken);
-// //     localStorage.setItem("refreshToken", refreshToken);
-// //   },
-
-// //   getAccessToken: () => {
-// //     return localStorage.getItem("accessToken");
-// //   },
-
-// //   getRefreshToken: () => {
-// //     return localStorage.getItem("refreshToken");
-// //   },
-
-// //   isAuthenticated: () => {
-// //     return !!authService.getAccessToken();
-// //   },
-
-// //   clearStorage: () => {
-// //     localStorage.removeItem("user");
-// //     localStorage.removeItem("accessToken");
-// //     localStorage.removeItem("refreshToken");
-// //   },
 };

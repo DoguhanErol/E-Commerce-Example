@@ -30,10 +30,13 @@ export const getOrderDetailById = async (orderId:string):Promise<Order[]> => {
     }
 };
 
-export const createOrder = async ():Promise<ServerMessage> => {
+export const createOrder = async () => {
     try {
-        const response = await axios.post<ServerMessage>(`${API_URL_ORDER_CREATE}`,{ headers: AuthHeader() })
-        const message:ServerMessage = response.data
+        console.log('create orderda')
+
+        const response = await axios.post(API_URL_ORDER_CREATE,{},{ headers: AuthHeader() })
+        console.log('create order:',response.status)
+        const message = response.data
         return message
     } catch (error) {
         console.log('Error create a order:', error);
