@@ -1,7 +1,7 @@
 import React from 'react'
 import ordersPic from '../../assets/Orders.webp'
 import { Link } from 'react-router-dom'
-const HomeOrders = () => {
+const HomeOrders:React.FC = () => {
   return (
     <>
     <figure className="hero  h-auto  w-11/12 max-w-[100vh] rounded-2xl shadow-2xl bg-no-repeat  group" >

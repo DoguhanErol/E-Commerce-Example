@@ -47,69 +47,78 @@ const CartItemCard = (props: Tprops) => {
   // If Cart Not Empty
   return (
     <>
-      <div className="overflow-x-auto min-h-screen">
-        <table className="table bg-base-200 shadow-2xl opacity-95 my-2">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Color</th>
-              <th>Size</th>
-              <th>Piece Price</th>
-              <th>Total Price</th>
-            </tr>
-          </thead>
-          {/* body */}
-          <tbody>
-            {props.cartData.cartItems.map((cartItem, index) => (
-              <tr key={index}>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src={API_URL_MEDIA + cartItem.product.image}
-                          alt="Product Image" 
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">{cartItem.product.name}</div>
-                      <div className="text-sm opacity-50">{cartItem.quantity}</div>
-                    </div>
-                  </div>
-                </td>
-                <td>{cartItem.color}</td>
-                <td>{cartItem.size}</td>
-                <td>{parseInt(cartItem.product.price).toString()}$</td>
-                <td>{cartItem.quantity * parseInt(cartItem.product.price)}$</td>
-              </tr>
-            ))}
-          </tbody>
-          {/* foot */}
-          <tfoot>
-            <tr>
-              <th>Product</th>
-              <th>Color</th>
-              <th>Size</th>
-              <th>Total Amount: <span className='text-base text-primary'>{parseInt(props.cartData.totalAmount).toString()}$</span></th>
-            </tr>
-          </tfoot>
-        </table>
-        <div className='flex flex-col'>
-          <div className='flex w-5/6 justify-end my-2'>
-            {/* Sipariş oluşturma butonunu tıklanabilir hale getirin */}
-            <button 
-              onClick={handleOrderProducts} 
-              className='btn btn-primary' 
-              disabled={isLoading}
-            >
-              Order Products
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
+  <div className="overflow-x-auto min-h-screen p-2">
+    <table className="table bg-base-200 shadow-2xl opacity-95 my-2 min-w-full">
+      {/* head */}
+      <thead className="hidden md:table-header-group">
+        <tr>
+          <th>Product</th>
+          <th>Color</th>
+          <th>Size</th>
+          <th>Piece Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      {/* body */}
+      <tbody>
+        {props.cartData.cartItems.map((cartItem, index) => (
+          <tr key={index} className="flex flex-col md:table-row mb-4 md:mb-0 border-b md:border-none">
+            <td className="flex items-center gap-3">
+              <div className="avatar">
+                <div className="mask mask-squircle h-12 w-12">
+                  <img
+                    src={API_URL_MEDIA + cartItem.product.image}
+                    alt="Product Image"
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="font-bold">{cartItem.product.name}</div>
+                <div className="text-sm opacity-50">Quantity: {cartItem.quantity}</div>
+              </div>
+            </td>
+            <td className="md:table-cell hidden">{cartItem.color}</td>
+            <td className="md:table-cell hidden">{cartItem.size}</td>
+            <td className="md:table-cell hidden">{parseInt(cartItem.product.price).toString()}$</td>
+            <td className="md:table-cell hidden">{cartItem.quantity * parseInt(cartItem.product.price)}$</td>
+            {/* Mobil için alternatif */}
+            <td className="md:hidden flex flex-col gap-1 mt-2">
+              <span>Color: {cartItem.color}</span>
+              <span>Size: {cartItem.size}</span>
+              <span>Price: {parseInt(cartItem.product.price).toString()}$</span>
+              <span>Total: {cartItem.quantity * parseInt(cartItem.product.price)}$</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+      {/* foot */}
+      <tfoot className="hidden md:table-footer-group">
+        <tr>
+          <th>Product</th>
+          <th>Color</th>
+          <th>Size</th>
+          <th>Total Amount: <span className="text-base text-primary">{parseInt(props.cartData.totalAmount).toString()}$</span></th>
+        </tr>
+      </tfoot>
+    </table>
+
+    {/* Mobil için total fiyat gösterimi */}
+    <div className="md:hidden text-right my-3 text-lg font-bold border-2 flex justify-center bg-base-200 bg-opacity-70 rounded-lg">
+      Total Amount: <span className="text-primary">{parseInt(props.cartData.totalAmount).toString()}$</span>
+    </div>
+
+    <div className="flex flex-col items-center md:items-end my-4">
+      <button 
+        onClick={handleOrderProducts} 
+        className="btn btn-primary w-full md:w-auto" 
+        disabled={isLoading}
+      >
+        Order Products
+      </button>
+    </div>
+  </div>
+</>
+
   );
 };
 
