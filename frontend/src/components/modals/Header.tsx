@@ -114,6 +114,11 @@ const Header: React.FC = () => {
                       Orders
                     </Link>
                   </li>
+                  <li  key={'Cart2'}>
+                    <Link to="/cart" className="justify-between">
+                      Cart
+                    </Link>
+                  </li>
                   <li><button onClick={handleLogout} className="btn btn-ghost text-red-700 border-2 border-red-700">Logout</button></li>
                 </ul>
               </div>

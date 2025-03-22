@@ -15,7 +15,7 @@ const CartPage = () => {
             {cartIsLoading ? (
                 <LoadingComponent />
             ) : cartError ? (
-                <div className='bg-cover' style={{ backgroundImage: `url(${bg_image})` }}>
+                <div className='bg-cover bg-center' style={{ backgroundImage: `url(${bg_image})` }}>
                     <InformationCard
                     mainMessage={'Cart is empty'}
                     linkActivate= {false}
@@ -23,14 +23,14 @@ const CartPage = () => {
                 </div>
             )  : cartData && cartData.cartItems.length <=0  ? (
                 //  If Cart is Empty
-                <div className='bg-cover' style={{ backgroundImage: `url(${bg_image})` }}>
+                <div className='bg-cover bg-center' style={{ backgroundImage: `url(${bg_image})` }}>
                     <InformationCard
                     mainMessage={'Cart is empty'}
                     linkActivate= {false}
                     />
                 </div>
             ): cartData && cartData.cartItems ? (
-                <div className='bg-cover' style={{ backgroundImage: `url(${bg_image})` }}>
+                <div className='bg-cover bg-center' style={{ backgroundImage: `url(${bg_image})` }}>
                 <CartItemCard cartData={cartData} />
                 </div>
             ):(

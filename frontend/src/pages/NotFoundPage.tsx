@@ -1,10 +1,11 @@
 //Permission: EVERYBODY
 
 import React from 'react'
+import NotFoundCard from '../components/modals/NotFoundCard'
 
 const NotFoundPage = () => {
   return (
-    <div>NotFoundPage</div>
+      <NotFoundCard />
   )
 }
 

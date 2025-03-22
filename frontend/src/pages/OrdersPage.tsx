@@ -20,7 +20,7 @@ const OrdersPage :React.FC = () => {
     ): error ?(
       <ErrorComponent message={error} />
     ): orders.length == 0 ? (
-      <div className='bg-cover' style={{ backgroundImage: `url(${bg_image})` }}>
+      <div className='bg-cover bg-center' style={{ backgroundImage: `url(${bg_image})` }}>
         <InformationCard
         mainMessage={'There is no order'}
         linkActivate= {false}
