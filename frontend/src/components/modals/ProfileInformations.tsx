@@ -1,4 +1,3 @@
-import React from 'react'
 import { useFetchUserProfile } from '../../hooks/useFetchUserProfile';
 import ErrorComponent from './Error';
 import LoadingComponent from './Loading';
@@ -8,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function ProfileInformations() {
     const { userProfile, isLoading, isError } = useFetchUserProfile();
     const navigate = useNavigate();
-    const { isLoggedIn, logout } = useAuthContext();
+    const { logout } = useAuthContext();
     
     const handleLogout = () => {
         logout(); // Logout the user

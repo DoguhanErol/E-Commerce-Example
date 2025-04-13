@@ -1,6 +1,5 @@
 import { Order, OrderItem } from '../../models/Order';
 import { API_URL_MEDIA } from '../../config/authConfig';
-import { API_URL_PRODUCTS } from '../../config/authConfig';
 
 type Props = {
     order: Order;

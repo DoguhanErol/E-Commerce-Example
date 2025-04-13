@@ -18,8 +18,6 @@ const LoginPage: React.FC = () => {
        if (response) {
          navigate('/'); // Giriş yaptıktan sonra ana sayfaya yönlendir
        }else{
-        console.log('Giris yapilamadi!') //Kullanici adi veya sifre hatali componenti gonder
-
          console.log(error) //Kullanici adi veya sifre hatali componenti gonder
        }
      } catch (err) {

@@ -43,15 +43,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"  # Nginx üzerinden yayın
-      - "443:443"
     depends_on:
       - backend
     networks:
       - app-network
-    volumes:
-      - ./frontend/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /etc/letsencrypt/live/example-e-commerce.shop/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro
-      - /etc/letsencrypt/live/example-e-commerce.shop/privkey.pem:/etc/ssl/private/privkey.pem:ro
 
 volumes:
   pgdata:
@@ -59,4 +54,3 @@ volumes:
 networks:
   app-network:
     driver: bridge
-

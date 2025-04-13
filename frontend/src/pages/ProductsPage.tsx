@@ -23,12 +23,12 @@ const ProductsPage: React.FC = () => {
                 <Loading />
             ) : error ? (
                 <Error message={error} />
-            ) : (
+            ) : products ? (
                 <>
                     {/* Veri */}
                     <div className="flex justify-center gap-4 flex-wrap p-5">
-                        {products.map((product) => (
-                            <ProductCard key={product.id} product={product} />
+                        {products.length > 0 && products.map((product, index) => (
+                            <ProductCard key={index} product={product} />
                         ))}
                     </div>
                     {/* Sayfalama */}
@@ -42,6 +42,10 @@ const ProductsPage: React.FC = () => {
                         </button>
                     </div>
                 </>
+            ) : (
+                <div className=' flex w-full items-center justify-center'>
+                    <h3 className='text-xl'>There is no product.</h3>
+                    </div>
             )}
         </div>
     );

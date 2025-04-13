@@ -14,7 +14,6 @@ export default function useFetchCartList() {
         try {
             const cartDataFromApi = await getCart();
             const cartData: Cart = transformCartData(cartDataFromApi); // Dönüştür
-            console.log('cart:', cartData);
             setCartData(cartData);
         } catch {
             setCartError('Cart Cant Reach');

@@ -1,22 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2023"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "target": "ES2022",                       // Modern ES2022 hedefi, tarayıcı ve node uyumluluğu sağlar.
+    "lib": ["ES2023"],                        // ES2023 kütüphanesi, ES2023 özelliklerine erişim sağlar.
+    "module": "ESNext",                       // ES modüllerini kullanarak modern modül sistemini etkinleştirir.
+    "skipLibCheck": true,                     // Lib dosyalarındaki tip kontrolünü atlar, geliştirme sürecini hızlandırır.
+    "moduleResolution": "node",               // Node.js modül çözümleme stratejisini kullanır.
+    "esModuleInterop": true,                  // ES modülleri ile uyumluluk sağlar.
+    "allowSyntheticDefaultImports": true,     // Varsayılan importları destekler (özellikle ES modülleriyle çalışırken kullanışlıdır).
+    "isolatedModules": true,                  // Her dosyayı bağımsız modül olarak işleme alır.
+    "noEmitOnError": true,                    // Hata durumunda dosya çıktısı oluşturmaz.
+    "strict": true,                           // Strict modunu açarak daha sıkı tip denetimi sağlar.
+    "noUnusedLocals": true,                   // Kullanılmayan yerel değişkenlere hata verir.
+    "noUnusedParameters": true,               // Kullanılmayan parametrelere hata verir.
+    "noFallthroughCasesInSwitch": true,       // Switch-case yapılarına daha sıkı kontrol ekler.
+    "noImplicitAny": true,                    // Herhangi bir tür kullanımı (any) hata verir.
+    "skipDefaultLibCheck": true               // Varsayılan kütüphane dosyalarındaki tür kontrolünü atlar.
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts",                         // Vite konfigürasyon dosyasını dahil et
+    "src/**/*.ts",                            // Tüm TypeScript dosyalarını (src altındaki) dahil et
+    "src/**/*.tsx"                            // Tüm TypeScript JSX dosyalarını dahil et
+  ],
+  "exclude": [
+    "node_modules",                           // node_modules dizinini dışla
+    "**/*.test.ts",                           // Test dosyalarını dışla
+    "**/*.test.tsx"                           // Test JSX dosyalarını dışla
+  ]
 }

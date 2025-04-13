@@ -1,5 +1,3 @@
-import React from 'react';
-import { getCart } from '../services/CartService';
 import LoadingComponent from '../components/modals/Loading';
 import ErrorComponent from '../components/modals/Error';
 import useFetchCartList from '../hooks/useFetchCartList';
@@ -8,7 +6,7 @@ import InformationCard from '../components/ui/InformationCard';
 import bg_image from '../assets/bg-orders.webp'
 
 const CartPage = () => {
-    const { cartData, cartError, cartIsLoading, refetch } = useFetchCartList();
+    const { cartData, cartError, cartIsLoading } = useFetchCartList();
 
     return (
         <>

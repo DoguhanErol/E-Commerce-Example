@@ -12,7 +12,7 @@ type Tprops = {
   cartData: Cart;
 };
 
-const CartItemCard = (props: Tprops) => {
+const CartItemCard:React.FC<Tprops> = (props: Tprops) => {
   const { createOrderResponse, isLoading, error, handleCreateOrder } = useCreateOrder();
   const navigate = useNavigate(); // useNavigate hook'unu kullanarak yönlendirme fonksiyonu oluşturun
   const { refetch } = useCart();
@@ -20,7 +20,6 @@ const CartItemCard = (props: Tprops) => {
   const handleOrderProducts = async () => {
 
     await handleCreateOrder(); // Siparişi oluştur
-    console.log('Cart Item Card:',createOrderResponse)
     if (error) {
       <FailedAlert message={'Unexpected error!!! Error message:'+ createOrderResponse} />
 

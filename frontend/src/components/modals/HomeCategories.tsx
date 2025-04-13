@@ -2,8 +2,8 @@ import React from 'react'
 import useFetchCategories from '../../hooks/useFetchCategories';
 import { Link } from 'react-router-dom';
 
-const HomeCategories = () => {
-    const { categories, loading, error } = useFetchCategories(); // Use the custom hook
+const HomeCategories:React.FC = () => {
+    const { categories } = useFetchCategories(); // Use the custom hook
 
   return (
     <>

@@ -9,7 +9,7 @@ const RegisterPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
-  const { register, error } = useAuthContext(); // register fonksiyonunu destructure ediyoruz
+  const { register } = useAuthContext(); // register fonksiyonunu destructure ediyoruz
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -32,18 +32,10 @@ DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = [
     'example-e-commerce.shop',
     'www.example-e-commerce.shop',
-    'localhost', #for dev
-    'localhost:80', #for dev
-    'localhost:8000' #for dev
-
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0'
 ]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://example-e-commerce.shop',
-    'https://www.example-e-commerce.shop',
-]
-CSRF_COOKIE_SECURE = True  # HTTPS üzerinden çerez gönderimi
-
 
 
 # Application definition
@@ -178,9 +170,12 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ALLOWED_ORIGINS = [
     'http://example-e-commerce.shop',
     'https://example-e-commerce.shop',
+    'http://www.example-e-commerce.shop',
     'https://www.example-e-commerce.shop',
-
-    'http://localhost'  #for dev
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://127.0.0.1:3000',
 ]
 CORS_ALLOW_HEADERS = [
     'content-type',
@@ -189,8 +184,12 @@ CORS_ALLOW_HEADERS = [
 CORS_ORIGIN_WHITELIST = [
     'http://example-e-commerce.shop',
     'https://example-e-commerce.shop',
+    'http://www.example-e-commerce.shop',
     'https://www.example-e-commerce.shop',
-    'http://localhost' #for dev
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://127.0.0.1:3000',
 ]
 
 

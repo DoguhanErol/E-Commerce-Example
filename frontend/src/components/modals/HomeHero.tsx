@@ -9,6 +9,8 @@ const HomeHero:React.FC = () => {
               This is an example made to improve the skills of the developer, <span className='font-bold text-red-700'>it is not a real sales site</span>.
               </p>
               <h3 className='font-bold text-lg '>Developer  <span className="text-xl text-primary">Doguhan Erol</span></h3>
+              <h4 className="font-bold text-lg flex justify-center"><a href="mailto:doguhaneroljob@gmail.com" className="text-sm text-black font-sans underline hover:text-blue-500">doguhaneroljob@gmail.com</a></h4>
+
               {/* <button className="btn btn-primary">Get Started</button> */}
             </div>
           </div>

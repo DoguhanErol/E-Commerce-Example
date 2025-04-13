@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { postItemToCart } from '../services/CartService'; // Servisi import ediyoruz
 import { Product, ProductForCart } from "../models/Product"; // Gerekli modelleri import ediyoruz
 import { productTransformForCart } from "../utils/productTransformForCart"; // Dönüştürme fonksiyonunu import ediyoruz

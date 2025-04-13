@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProductForCart, Product } from "../../models/Product";
+import { Product } from "../../models/Product";
 import { API_URL_MEDIA } from "../../config/authConfig";
 import { Link } from "react-router-dom";
 import { postItemToCart } from "../../services/CartService";

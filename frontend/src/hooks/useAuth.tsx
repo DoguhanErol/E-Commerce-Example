@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import  { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { authService } from "../services/AuthService";
 import { User } from "../models/User";
 
@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const response = await authService.login(username, password);
       if (response) {
         await loadUser();
-        console.log("Login auth başarılı");
         await refreshToken();
         setIsLoggedIn(true);
         setLoadingAuth(false);
@@ -57,10 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = async (username: string, email: string, password: string) => {
     setLoadingAuth(true);
     try {
-      const response = await authService.register({ username, email, password });
-      if (response) {
-        console.log("Registration complete, Message from AuthProvider");
-      }
+      await authService.register({ username, email, password });
       setLoadingAuth(false);
     } catch (error: any) {
       setError(error.response?.data?.detail || "Registration failed, please try again");
@@ -80,12 +76,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshToken = async () => {
     try {
-      const isRefreshed = await authService.refreshToken();
-      if (isRefreshed) {
-        console.log("Token refreshed.");
-      }
+       await authService.refreshToken();
     } catch (error: any) {
-      console.log("Token can't be refreshed.");
       setError("Failed to refresh token");
     }
   };

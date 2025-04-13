@@ -7,29 +7,24 @@ export const getProductsByPage = async (page: number=1) => {
     const response = await axios.get<{ results: Product[]; count: number }>(`${API_URL_PRODUCTS}?page=${page}`);
     return response.data;
   } catch (error) {
-    console.log('Error fetching products:', error);
     throw error; 
   }
 };
 
 export const getProductById = async (id: number) => {
   try {
-    const response = await axios.get<Product>(`${API_URL_PRODUCTS}/${id}`);
-    console.log(response.data)
+    const response = await axios.get<Product>(API_URL_PRODUCTS + '/' + id);
     return response.data;
   } catch (error) {
-    console.log('Error fetching product by ID:', error);
     throw error; 
   }
 };
 
 export const getProductsByCategory = async (categoryName:String,page: number=1) => {
   try {
-    const response = await axios.get<{ results: Product[]; count: number }>(`${API_URL_PRODUCTS}?page=${page}&category=${categoryName}`)
-    console.log(response)
+    const response = await axios.get<{ results: Product[]; count: number }>(API_URL_PRODUCTS+'?page='+ page + '&category=' + categoryName)
     return response.data;
   } catch (error) {
-    console.log('Error fetching products by category:', error);
     throw error; 
   }
 }

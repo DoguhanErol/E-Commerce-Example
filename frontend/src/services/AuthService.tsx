@@ -34,7 +34,6 @@ import { User } from "../models/User";
      localStorage.setItem("user", JSON.stringify(response.data.user));
      localStorage.setItem("accessToken", response.data.accessToken);
      localStorage.setItem("refreshToken", response.data.refreshToken);
-     console.log('Login Service successed.')
      return true;
      }else {
       console.error("Login error statuss:", response.status);
@@ -45,11 +44,12 @@ import { User } from "../models/User";
    // Kullanıcı çıkışı
    logout: async () => {
     const refreshToken = localStorage.getItem('refreshToken')
+    const json =JSON.stringify({ refreshToken: refreshToken })
      try {
      const response= await axios.post(
         API_URL_LOGOUT,
-        { refreshToken: refreshToken },
-        { headers: AuthHeader() } //Auth header gerekli sekilde bearer token olarak accessTokeni gonderiyor
+        json,
+        { headers: { ...AuthHeader(), 'Content-Type': 'application/json' } }
     );
     if (response.status === 200 || response.status === 204) {
       localStorage.removeItem('user');

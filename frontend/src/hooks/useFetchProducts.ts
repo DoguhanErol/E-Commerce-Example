@@ -3,7 +3,7 @@ import { Product } from "../models/Product";
 import { getProductsByPage } from "../services/ProductService";
 
 export default function useFetchProducts(page: number) {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<Product[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -13,7 +13,7 @@ export default function useFetchProducts(page: number) {
         setError(null);
         try {
             const response = await getProductsByPage(page);
-            setProducts(response.results);
+            setProducts(response.results || null);
             setTotalPages(Math.ceil(response.count / 2)); // Sayfa sayısını ayarla
         } catch (e) {
             setError('!!!Error Fetching Products !!! ' + 'Error Message:" ' + e + ' "');

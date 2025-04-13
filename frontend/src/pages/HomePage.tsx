@@ -36,8 +36,6 @@ const HomePage:React.FC =  () => {
 
       ) : (
         <>
-        <Divider headerText='Login' />
-        <div>Login Cart</div>
         </>
       )}
 
